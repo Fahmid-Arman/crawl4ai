@@ -592,7 +592,8 @@ class Compiler:
         cond_type = condition[0]
         
         if cond_type == "EXISTS":
-            return f"!!document.querySelector('{condition[1]}')"
+            sel = condition[1].replace("\\", "\\\\").replace("'", "\\'")
+            return f"!!document.querySelector('{sel}')"
         elif cond_type == "NOT":
             # Recursively handle the negated condition
             inner_condition = self._emit_condition(condition[1])
